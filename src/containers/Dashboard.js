@@ -44,7 +44,7 @@ export const card = (bill) => {
         <span> ${bill.amount} € </span>
       </div>
       <div class='date-type-container'>
-        <span> ${formatDate(bill.date)} </span>
+        <span> ${bill.date} </span>
         <span> ${bill.type} </span>
       </div>
     </div>
@@ -105,9 +105,6 @@ export default class {
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
-    $('#icon-eye-d').click(this.handleClickIconEye)
-    $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
-    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -140,12 +137,11 @@ export default class {
       this.counter ++
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
-      $(`#status-bills-container${this.index}`)
-        .html("")
+      $(`#status-bills-container${this.index}`).html("")
       this.counter ++
     }
 
-    bills.forEach(bill => {
+    bills.filter(bill => bill.status === getStatus(this.index)).forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
@@ -172,7 +168,7 @@ export default class {
       .catch(console.log)
     }
   }
-    
+
   // not need to cover this function by tests
   updateBill = (bill) => {
     if (this.firestore) {
