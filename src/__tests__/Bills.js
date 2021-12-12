@@ -2,6 +2,7 @@ import {screen} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import {bills} from "../fixtures/bills.js"
 
+
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
