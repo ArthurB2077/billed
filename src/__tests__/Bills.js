@@ -1,6 +1,7 @@
 import { screen } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
+import {ROUTES} from "../constants/routes.js";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -16,6 +17,19 @@ describe("Given I am connected as an employee", () => {
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
+    })
+  })
+  describe("When the Bills page is loading", () => {
+    test("Then the loading page should be return", () => {
+      document.body.innerHTML = BillsUI({data: bills, loading: true, error: undefined})
+      expect(screen.getByText("Loading...")).toBeTruthy()
+    })
+  })
+  describe("When the Bills page received an error", () => {
+    test("Then the error page should be return", () => {
+      const error = "Error message"
+      document.body.innerHTML = BillsUI({data: bills, loading: undefined, error: error})
+      expect(screen.getByText(`${error ? error : ""}`)).toBeTruthy()
     })
   })
 })
