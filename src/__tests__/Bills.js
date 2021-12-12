@@ -1,6 +1,7 @@
-import { screen } from "@testing-library/dom"
+import {screen} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
-import { bills } from "../fixtures/bills.js"
+import {bills} from "../fixtures/bills.js"
+
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -18,17 +19,17 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
   })
-  describe("When the Bills page is loading", () => {
-    test("Then the loading page should be return", () => {
+  describe("When I am on Bills page but it is loading", () => {
+    test("Then, Loading page should be rendered", () => {
       document.body.innerHTML = BillsUI({data: bills, loading: true, error: undefined})
       expect(screen.getByText("Loading...")).toBeTruthy()
     })
   })
-  describe("When the Bills page received an error", () => {
-    test("Then the error page should be return", () => {
+  describe("When I am on Dashboard page but back-end send an error message", () => {
+    test("Then, Error page should be rendered", () => {
       const error = "Error message"
       document.body.innerHTML = BillsUI({data: bills, loading: undefined, error: error})
-      expect(screen.getByText(`${error ? error : ""}`)).toBeTruthy()
+      expect(screen.getByTestId("error-message")).toBeTruthy()
     })
   })
 })
