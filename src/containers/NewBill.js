@@ -1,4 +1,3 @@
-
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
@@ -56,6 +55,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   createBill = (bill) => {
     if (this.firestore) {
       this.firestore
