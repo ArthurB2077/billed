@@ -14,7 +14,8 @@
       "!**/external/**",
       "!**/fixtures/**",
       "!**/lcov-report/**"
-    ]
+    ],
+    "testURL": "http://127.0.0.1:8080/"
   },
   "type": "module",
   "dependencies": {
