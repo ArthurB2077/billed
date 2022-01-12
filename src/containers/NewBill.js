@@ -1,4 +1,3 @@
-
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
@@ -32,9 +31,10 @@ export default class NewBill {
           })
     } else {
       this.document.querySelector(`input[data-testid="file"]`).value = ""
-      throw new Error("Le format du fichier n'est pas accepté. Veuillez importer un fichier de type jpg, jpeg ou png")
+      alert("Le format du fichier n'est pas accepté. Veuillez importer un fichier de type jpg, jpeg ou png")
     }
   }
+
   handleSubmit = e => {
     e.preventDefault()
     const email = JSON.parse(localStorage.getItem("user")).email
@@ -56,6 +56,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   createBill = (bill) => {
     if (this.firestore) {
       this.firestore
