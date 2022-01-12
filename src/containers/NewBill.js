@@ -31,9 +31,10 @@ export default class NewBill {
           })
     } else {
       this.document.querySelector(`input[data-testid="file"]`).value = ""
-      throw new Error("Le format du fichier n'est pas accepté. Veuillez importer un fichier de type jpg, jpeg ou png")
+      alert("Le format du fichier n'est pas accepté. Veuillez importer un fichier de type jpg, jpeg ou png")
     }
   }
+
   handleSubmit = e => {
     e.preventDefault()
     const email = JSON.parse(localStorage.getItem("user")).email

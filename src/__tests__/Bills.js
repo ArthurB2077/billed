@@ -33,25 +33,19 @@ describe("Given I am connected as an employee", () => {
 
   describe("When I am on Bills page and I click on new bill button", () => {
     test("Then, I should be redirected on send bill form", () => {
-
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }))
-
       const bill = new Bills({
         document, onNavigate, firestore: null, localStorage: window.localStorage
       })
       document.body.innerHTML = BillsUI({data: bills})
-
       const handleClickNewBill = jest.fn((e) => bill.handleClickNewBill(e))
-
       const buttonNew = screen.getByTestId('btn-new-bill')
-
       buttonNew.addEventListener('click', handleClickNewBill)
       userEvent.click(buttonNew)
       expect(handleClickNewBill).toHaveBeenCalled()
@@ -98,7 +92,6 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getByRole('dialog', { hidden: true })).toMatchSnapshot()
     })
   })
-
   describe("When I am on Bills page but it is loading", () => {
     test("Then, Loading page should be rendered", () => {
       document.body.innerHTML = BillsUI({loading: true})
