@@ -117,6 +117,7 @@ describe("Given I am connected as an employee", () => {
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to Bills page", () => {
     test("Then posts bills from mock API POST", async () => {
+
       const bill = {
         email: 'developpement-test@protonmail.com',
         type: 'Transports',
@@ -130,20 +131,16 @@ describe("Given I am a user connected as Employee", () => {
         fileName: "unamed.jpg",
         status: 'pending'
       }
-
-      const onNavigate = (pathname, data = [bill]) => {
-        document.body.innerHTML = ROUTES({ pathname, data })
+      const firestore = {
+        bills: jest.fn(() => {
+          return {
+            add : jest.fn().mockResolvedValue(bill)
+          }
+        })
       }
+      const onNavigate = jest.fn()
 
-      Object.defineProperty(window, 'firebase', { value: {
-          bills: jest.fn(() => {
-            return {
-              add : jest.fn().mockResolvedValue(bill)
-            }
-          })
-      }})
-
-      const newBill = new NewBill({document, onNavigate, firestore: window.firebase, localStorage: window.localStorage})
+      const newBill = new NewBill({document, onNavigate, firestore: firestore, localStorage: window.localStorage})
       const handleSubmit = jest.fn((e) => newBill.handleSubmit(e))
       const form = screen.getByTestId('form-new-bill')
 
@@ -151,7 +148,41 @@ describe("Given I am a user connected as Employee", () => {
       jest.fn(() => newBill.createBill(bill))
       fireEvent.submit(form, { currentTarget: form })
 
-      expect(screen.getByText(bill.name)).toBeTruthy()
+      expect(onNavigate).toHaveBeenCalledWith('#employee/bills')
+      expect(onNavigate).toHaveBeenCalledTimes(2)
+    })
+    test("Then posts bills from mock API POST and fails", async () => {
+      const firestore = {
+        bills: jest.fn(() => {
+          return {
+            add : jest.fn().mockRejectedValue(new Error('Error'))
+          }
+        })
+      }
+      const bill = {
+        email: 'developpement-test@protonmail.com',
+        type: 'Transports',
+        name:  'shouldBeFindByExpectStatement',
+        amount: 40,
+        date:  "2021-12-01",
+        vat: "60",
+        pct: 35,
+        commentary: '',
+        fileUrl: "https://firebasestorage.googleapis.com/v0/b/billable-677b6.appspot.com/o/justificatifs%2F1630071872647.jpg?alt=media&token=0b1420f5-8ae6-4fd8-a5a0-e6a5d87bf931",
+        fileName: "unamed.jpg",
+        status: 'pending'
+      }
+      const onNavigate = jest.fn()
+      const newBill = new NewBill({document, onNavigate, firestore: firestore, localStorage: window.localStorage})
+      const handleSubmit = jest.fn((e) => newBill.handleSubmit(e))
+      const form = screen.getByTestId('form-new-bill')
+
+      form.addEventListener('submit', handleSubmit)
+      jest.fn(() => newBill.createBill(bill))
+      fireEvent.submit(form, { currentTarget: form })
+
+      expect(onNavigate).toHaveBeenCalledWith('#employee/bills')
+      expect(onNavigate).toHaveBeenCalledTimes(2)
     })
   })
 })
