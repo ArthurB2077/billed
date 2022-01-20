@@ -1,6 +1,7 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import { formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
+import firebase from "../__mocks__/firebase.js";
 
 export default class {
   constructor({ document, onNavigate, firestore, localStorage }) {
@@ -59,7 +60,14 @@ export default class {
           .filter(bill => bill.email === userEmail)
         return bills
       })
-      .catch(error => error)
+      .catch(error => {
+        console.error(error)
+        return firebase.get()
+          .then(data => {
+            console.log("data", Object.values(data)[0])
+            return Object.values(data)[0]
+          })
+      })
     }
   }
 }
