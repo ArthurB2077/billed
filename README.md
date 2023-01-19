@@ -1,50 +1,55 @@
-**Comment lancer l'application en local** :
+# Billed
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com) 
+[![forthebadge](https://forthebadge.com/images/badges/validated-html5.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 
-Clonez le projet :
+This project aim to train on jest and on tests. The app is pretty basic but the most intesresting part are the tests
+
+### Start the app
+
+Clone project:
 ```
-$ git clone https://github.com/OpenClassrooms-Student-Center/Billed-app-FR.git
+$ git clone git@github.com:ArthurB2077/billed.git
 ```
 
-Allez au repo cloné :
 ```
 $ cd Billed-app-FR
 ```
 
-Installez les packages npm (décrits dans `package.json`) :
+Install dependencies:
 ```
 $ npm install
 ```
 
-Installez live-server pour lancer un serveur local :
+Install a live server :
 ```
 $ npm install -g live-server
 ```
 
-Lancez l'application :
+Start the server :
 ```
 $ live-server
 ```
 
-Puis allez à l'adresse : `http://127.0.0.1:8080/`
+Go to: `http://127.0.0.1:8080/`
 
 
-**Comment lancer tous les tests en local avec Jest :**
+### Launch the tests:
 
 ```
 $ npm run test
 ```
 
-**Comment lancer un seul test :**
+or for one test
 
-Installez jest-cli :
+Install jest-cli :
 
 ```
 $npm i -g jest-cli
 $jest src/__tests__/your_test_file.js
 ```
 
-**Comment voir la couverture de test :**
+### Consult the test cover:
 
 `http://127.0.0.1:8080/coverage/lcov-report/`
-
-
